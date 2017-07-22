@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>模拟短信发送</title>
+		<style type="text/css">
+			body
+			{
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑";
+				font-size: 14px;
+			}
+			.wrap
+			{
+				width: 289px;
+				height: 594px;
+				margin: 10px auto;
+				background: url(img/phone.jpg) no-repeat;
+				position: relative;
+			}
+			#box
+			{
+				width: 217px;
+				height: 350px;
+				padding: 10px;
+				position: absolute;
+				top:86px;
+				left: 26px;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+
+			.formbox
+			{
+				width: 240px;
+				height: 53px;
+				position: absolute;
+				bottom: 83px;
+    			left: 23px;
+			}
+			.formbox .imgbox
+			{
+				display: block;
+				position: absolute;
+				top: 13px;
+				left: 8px;
+				width: 30px;
+				height: 30px;
+				text-align: center;
+				cursor: pointer;
+			}
+			#img1
+			{
+				width: 26px;
+				height: 26px;
+			}
+			#text1
+			{
+				position: absolute;
+				left: 49px;
+			    top: 13px;
+			    width: 132px;
+			    height: 18px;
+				resize: none;
+				border: none;
+				background: transparent;
+				color: #000;
+				overflow: hidden;
+				outline: none;
+				font-family: "微软雅黑";
+				font-size: 14px;
+			}
+			#btn1
+			{
+				width: 50px;
+				height: 31px;
+				cursor: pointer;
+				position: absolute;
+				top: 10px;
+				left: 187px;
+			}
+			.dialogbox_01,.dialogbox_02
+			{
+				display: block;
+				width: 100%;
+				text-align: right;
+				margin: 2px 0;
+			}
+			.dialogbox_02
+			{
+				text-align: left;
+			}
+			.dialogbox_01 img,.dialogbox_02 img
+			{
+				width: 26px;
+				height: 26px;
+				vertical-align: top;
+			}
+			.dialogbox_01 span,.dialogbox_02 span
+			{
+				display: inline-block;
+				padding: 3px;
+				color: #fff;
+				max-width: 160px;
+				overflow: hidden;
+				text-align: left;
+			}
+			.dialogbox_01 span
+			{
+				background: #21c618;
+				margin-right: 5px;
+			}
+			.dialogbox_02 span
+			{
+				background: #ded6e7;
+				margin-left: 5px;
+				color: #000000;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				//获取元素
+				var oBox = fnId('box');
+				var oImg1 = fnId('img1');
+				var oText1 = fnId('text1');
+				var oBtn1 = fnId('btn1');
+				var bFlag = false;
+				var arr = ['people1.jpg', 'people2.jpg'];
+				var num = 0;
+				var str = '';
+
+				//点击对话头像，切换当前对话
+				oImg1.onclick = function(){
+					if(bFlag){
+						this.src = 'img/'+arr[0];
+					}else{
+						this.src = 'img/'+arr[1];
+					}
+					bFlag = !bFlag;
+				};
+
+				//点击提交按钮，开始读取对话数据
+				oBtn1.onclick = function(){
+
+					//如果是空不让提交并弹窗提示
+					if(oText1.value==''){
+						alert('请输入内容再提交！！！');
+					}else{
+						//提交之前先判断当前是谁在说话
+						if(!bFlag){
+							str = '<div class="dialogbox_01">'
+											+'<span>说：'+oText1.value+'</span>'
+											+'<img src="img/'+arr[0]+'" />'
+											+'</div>';
+						}else{
+							str = '<div class="dialogbox_02">'
+											+'<img src="img/'+arr[1]+'" />'
+											+'<span>说：'+oText1.value+'</span>'
+											+'</div>';
+						}
+
+						oBox.innerHTML = str + oBox.innerHTML;
+
+						oText1.value = '';
+					}
+
+				};
+
+			};
+
+			//封装ID选择器
+			function fnId(id){
+				return document.getElementById(id);
+			};
+		</script>
+	</head>
+	<body>
+		<div class="wrap">
+			<!--对话显示框-->
+			<div id="box"></div>
+			<div class="formbox">
+				<span class="imgbox">
+					<img src="img/people1.jpg" id="img1" />
+				</span>
+				<textarea id="text1"></textarea>
+				<a href="javascript:;" id="btn1"></a>
+			</div>
+		</div>
+	</body>
+</html>
